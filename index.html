@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Vue Test</title>
+	<script src="./js/vue.js"></script>
+</head>
+<body>
+	<div id="app1">
+		<p v-if="seen" v-bind:class="{active:isActive}">{{Console}}</p>
+		<div v-bind:id="dynamicId"></div>
+		<a :href="url">anothod url</a>
+		<my></my>
+		<my1 v-bind:size="2+1"></my1>
+		<my1></my1>
+	</div>
+	<ul id="exp1">
+		<li v-for="(item, index) in items">
+			{{index}}--{{item.message}}
+		</li>
+	</ul>
+	<script>
+		var child = {
+			template: '<div>a custom ele</div>'
+		}
+		
+
+		var app1 = new Vue({
+			el: "#app1",
+			data: {
+				seen: true,
+				message: '<h1>第一个应用</h1>',
+				dynamicId: 'app2',
+				url: 'javascript:;',
+				isActive:false
+			},
+			computed: {
+				Console: function(){
+					return(Date.now());
+				}
+			},
+			components: {
+				'my': child,
+				"my1":{
+					props: ['size'],
+					template: '<div v-on:click="message += 1">{{message}}--{{size}}</div>',
+					data: function(){
+						return {
+							message: this.size
+						}
+					}
+				}
+			}
+		})
+		var exp1 = new Vue({
+			el: "#exp1",
+			data: {
+				items: [
+					{message: "foo"},
+					{message: "Bar"}
+				]
+			}
+		})
+		
+	</script>
+</body>
+</html>
