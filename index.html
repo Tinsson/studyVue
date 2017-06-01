@@ -40,6 +40,10 @@
 		</select>
 		<p>select is {{select}}</p>
 	</div>
+	<div id="app3">
+		<h1 v-if="ok" v-on:click="change()">Yes</h1>
+		<h2 v-else v-on:click="change()">No</h2>
+	</div>
 	<script>
 		var child = {
 			template: '<div>a custom ele</div>'
@@ -64,10 +68,15 @@
 				'my': child,
 				"my1":{
 					props: ['size'],
-					template: '<div v-on:click="message += 1">{{message}}--{{size}}</div>',
+					template: '<div v-on:click="message += 1">{{message}}--{{size}}--{{normalizedSize}}</div>',
 					data: function(){
 						return {
 							message: this.size
+						}
+					},
+					computed: {
+						normalizedSize: function(){
+							return this.size;
 						}
 					}
 				}
@@ -92,6 +101,21 @@
 						  {text:"c",value:"3"},
 						  {text:"d",value:"4"}],
 				select: [4]
+				}
+		})
+		var app2 = new Vue({
+			el: "#app3",
+			data: {
+				ok: true
+			},
+			methods:{
+				change: function(){
+					if(this.ok){
+						this.ok = false;
+					}else{
+						this.ok = true;
+					}
+				}
 			}
 		})
 	</script>
