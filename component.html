@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>VUE component test</title>
+	<script src="./js/vue.js"></script>
+</head>
+<body>
+	<div id="app1">
+		<arrow></arrow>
+	</div>
+	<div id="app2">
+		<ch></ch>
+		<table>
+			<tr is="my-row"></tr>
+			<!--特定元素下要用is-->
+		</table>
+	</div>
+	<script>
+		//全局用组件，创建根实例后才能使用
+		Vue.component("arrow",{
+			template: '<div>a custom arrow=></div>'
+		})
+		new Vue({
+			el: "#app1"
+		})
+		//局部模板
+		var child = {
+			template: "<div>a child div</div>"
+		}
+		var app2 = new Vue({
+			el: "#app2",
+			components: {
+				"ch": child,
+				"my-row": {
+					template: "<div>80m²</div>"
+				}
+			}
+		})
+	</script>
+</body>
+</html>
