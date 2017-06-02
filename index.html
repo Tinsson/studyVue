@@ -8,12 +8,12 @@
 <body>
 	<div>
 	0 123456789
-	A|F G A BC D E12
-	B|C D EF G A BC			
-	G| A BC D EF G7
-	D| EF D A BC D
-	A| BC D EF G A
-	E|F G A BC D EF
+	A|F G A BC D E	12
+	B|C D EF G A BC	10		
+	G| A BC D EF G	7
+	D| EF G A BC D	5
+	A| BC D EF G A	2
+	E|F G A BC D EF	0
 	</div>
 	<div id="app1">
 		<p v-if="seen" v-bind:class="{active:isActive}">{{Console}}</p>
@@ -28,6 +28,10 @@
 			{{index}}--{{item.message}}
 		</li>
 	</ul>
+	<div id="exp2">
+		<input type="text" v-model="info">
+		<span>this is {{info}}</span>
+	</div>
 	<script>
 		var child = {
 			template: '<div>a custom ele</div>'
@@ -70,7 +74,12 @@
 				]
 			}
 		})
-		
+		var exp2 = new Vue({
+			el: "#exp2",
+			data: {
+				info: "info"
+			}
+		})
 	</script>
 </body>
 </html>
