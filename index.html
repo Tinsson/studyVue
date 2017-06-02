@@ -30,7 +30,15 @@
 	</ul>
 	<div id="exp2">
 		<input type="text" v-model="info">
-		<span>this is {{info}}</span>
+		<p>this is {{info}}</p>
+		<input type="checkbox" v-model="check" value="ck1">
+		<input type="checkbox" v-model="check" value="ck2">
+		<input type="checkbox" v-model="check" value="ck3">
+		<p>check is {{check}}</p>
+		<select name="test" v-model="select" multiple id="">
+			<option v-for="v in options" v-bind:value="v.value">{{v.text}}</option>
+		</select>
+		<p>select is {{select}}</p>
 	</div>
 	<script>
 		var child = {
@@ -77,7 +85,13 @@
 		var exp2 = new Vue({
 			el: "#exp2",
 			data: {
-				info: "info"
+				info: "info",
+				check: [],
+				options: [{text:"a",value:"1"},
+						  {text:"b",value:"2"},
+						  {text:"c",value:"3"},
+						  {text:"d",value:"4"}],
+				select: []
 			}
 		})
 	</script>
