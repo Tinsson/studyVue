@@ -67,7 +67,7 @@
 			components: {
 				'my': child,
 				"my1":{
-					props: ['size'],
+					props: {'size':Number},
 					template: '<div v-on:click="message += 1">{{message}}--{{size}}--{{normalizedSize}}</div>',
 					data: function(){
 						return {

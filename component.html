@@ -19,6 +19,12 @@
 		<active>出售</active>
 		<active>出租</active>
 	</div>
+	<div id="app3">
+		<p>{{total}}</p>
+		<btn-count v-on:increment="incrementTotal"></btn-count>
+		<btn-count v-on:increment="incrementTotal"></btn-count>
+		<btn-count v-on:increment="incrementTotal"></btn-count>
+	</div>
 	<script>
 		//全局用组件，创建根实例后才能使用
 		Vue.component("arrow",{
@@ -51,6 +57,31 @@
 					}
 				}
 			}
+		})
+		//自定义事件绑定
+		var app3 = new Vue({
+			el: "#app3",
+			data: {
+				total: 0
+			},
+			methods: {
+				incrementTotal: function(){
+					this.total += 1;
+				}
+			},
+			components: {'btn-count':{
+				template: "<button v-on:click='increment'>{{counter}}</button>",
+				data: function(){
+					return {
+						counter: 0
+					}
+				},
+				methods: {
+					increment: function(){
+					this.counter += 1;
+					this.$emit("increment");
+				}}
+			}}
 		})
 	</script>
 </body>
