@@ -11,7 +11,7 @@
 	</div>
 	<div id="app2">
 		<input type="text" v-model="totr">
-		<ch></ch>
+		<ch>3333</ch>
 		<table>
 			<tr is="my-row" v-bind:tr-msg="totr"></tr>
 			<!--特定元素下要用is,v-bind可以把值当成表达式来计算-->
@@ -25,6 +25,15 @@
 		<btn-count v-on:increment="incrementTotal"></btn-count>
 		<btn-count v-on:increment="incrementTotal"></btn-count>
 	</div>
+	<div id="app4">
+		<h1>我是父组件的标题</h1>
+		  <my-component>
+		  	<h1 slot="head">second</h1>
+		    <p>这是一些初始内容</p>
+		    <p>这是更多的初始内容</p>
+		    <span slot="footer">copyright</span>
+		  </my-component>
+	</div>
 	<script>
 		//全局用组件，创建根实例后才能使用
 		Vue.component("arrow",{
@@ -35,7 +44,7 @@
 		})
 		//局部模板
 		var child = {
-			template: "<div>a child div</div>"
+			template: "<div><div>a child div</div><slot></slot></div>"
 		}
 		var app2 = new Vue({
 			el: "#app2",
@@ -82,6 +91,14 @@
 					this.$emit("increment");
 				}}
 			}}
+		})
+		var app4 = new Vue({
+			el: "#app4",
+			components : {
+				"my-component": {
+					template: '<div><slot name="head"></slot>-<h2>我是子组件的标题</h2>-<slot></slot>-<slot name="footer"></slot></div>'
+				}
+			}
 		})
 	</script>
 </body>
