@@ -24,7 +24,7 @@
 		<my1></my1>
 	</div>
 	<ul id="exp1">
-		<li v-for="(item, index) in items">
+		<li v-for="(item, index) of items">
 			{{index}}--{{item.message}}
 		</li>
 	</ul>
@@ -41,8 +41,8 @@
 		<p>select is {{select}}</p>
 	</div>
 	<div id="app3">
-		<h1 v-if="ok" v-on:click="change()">Yes</h1>
-		<h2 v-else v-on:click="change()">No</h2>
+		<h1 v-if="ok" v-on:click="change('1111',$event)">Yes</h1>
+		<h2 v-else v-on:click="change('2222',$event)">No</h2>
 	</div>
 	<script>
 		var child = {
@@ -109,12 +109,13 @@
 				ok: true
 			},
 			methods:{
-				change: function(){
+				change: function(num,event){
 					if(this.ok){
 						this.ok = false;
 					}else{
 						this.ok = true;
 					}
+					console.log(num,event.target.innerHTML);
 				}
 			}
 		})
