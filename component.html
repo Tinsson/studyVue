@@ -16,23 +16,30 @@
 			<tr is="my-row" v-bind:tr-msg="totr"></tr>
 			<!--特定元素下要用is,v-bind可以把值当成表达式来计算-->
 		</table>
-		<active>出售</active>
+		<some is="active">出售</some>
 		<active>出租</active>
 	</div>
 	<div id="app3">
+		<keep-alive>
 		<p>{{total}}</p>
+		</keep-alive>
 		<btn-count v-on:increment="incrementTotal"></btn-count>
 		<btn-count v-on:increment="incrementTotal"></btn-count>
 		<btn-count v-on:increment="incrementTotal"></btn-count>
 	</div>
 	<div id="app4">
-		<h1>我是父组件的标题</h1>
+		<h1>每月新增数据统计</h1>
 		  <my-component>
-		  	<h1 slot="head">second</h1>
-		    <p>这是一些初始内容</p>
-		    <p>这是更多的初始内容</p>
-		    <span slot="footer">copyright</span>
+		  	<h1 slot="head">管理员</h1>
+		    <p>最新成交套数</p>
+		    <p>成交均价</p>
+		    <span slot="footer">业务员</span>
 		  </my-component>
+	</div>
+	<div id="app5">
+		<custom :msg="'cus_msg'" v-on:cuse="move">
+			<img class="gitpic" slot="img" src="./images/git_tip.jpg" alt="">
+		</custom>
 	</div>
 	<script>
 		//全局用组件，创建根实例后才能使用
@@ -49,7 +56,8 @@
 		var app2 = new Vue({
 			el: "#app2",
 			data:{
-				totr: "平米"
+				totr: "平米",
+				view: "active"
 			},
 			components: {
 				"ch": child,
@@ -92,11 +100,42 @@
 				}}
 			}}
 		})
+		//命名slot的名称
 		var app4 = new Vue({
 			el: "#app4",
 			components : {
 				"my-component": {
+					props: ['text'],
 					template: '<div><slot name="head"></slot>-<h2>我是子组件的标题</h2>-<slot></slot>-<slot name="footer"></slot></div>'
+				}
+			}
+		})
+		//编写可复用的组件
+		var app5 = new Vue({
+			el: "#app5",
+			methods: {
+				move: function(){
+					console.log(1111);
+				}
+			},
+			components: {
+				"custom": {
+					template:"<div><p @click='add'>details——'{{details}}'</p><p @click='show'>list——{{list}}</p><slot name='img'></slot></div>",
+					props: ['msg','text'],
+					data: function(){
+						return {
+							details: true,
+							list: true
+						}
+					},
+					methods: {
+						add: function(){
+							console.log(this.msg);
+						},
+						show: function(){
+							this.$emit("cuse");
+						}
+					}
 				}
 			}
 		})
