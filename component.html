@@ -37,6 +37,7 @@
 		  </my-component>
 	</div>
 	<div id="app5">
+		<div v-if="seen">aaa</div>
 		<custom :msg="'cus_msg'" v-on:cuse="move">
 			<img class="gitpic" slot="img" src="./images/git_tip.jpg" alt="">
 		</custom>
@@ -113,6 +114,9 @@
 		//编写可复用的组件
 		var app5 = new Vue({
 			el: "#app5",
+			data:{
+				seen: true
+			},
 			methods: {
 				move: function(){
 					console.log(1111);
@@ -139,6 +143,8 @@
 				}
 			}
 		})
+
+		console.log(app5.seen);
 	</script>
 </body>
 </html>
