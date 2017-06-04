@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Vue Test</title>
 	<script src="./js/vue.js"></script>
+	<link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
 	<style>
 		.slide-fade-enter-active {
 		  transition: all .3s ease;
@@ -16,6 +17,7 @@
 		  opacity: 0;
 		}
 	</style>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 </head>
 <body>
 	<div id="exp1">
@@ -24,6 +26,22 @@
 			<p v-if="show">hello</p>
 		</transition>
 	</div>
+	<div id="exp2">
+		<button @click="show = !show">animated.css</button>
+		<transition name="custom slide-fade" enter-active-class="animated bounceInRight" leave-active-class="animated tada">
+			<p v-if="show">demo</p>
+		</transition>
+	</div>
+	<div id="exp3">
+		<button @click="show = !show">velocity</button>
+		<transition v-on:before-enter="beforeEnter"
+					v-on:enter="enter"
+					v-on:leave="leave"
+					v-bind:css="false"><!--如果仅仅使用js来过渡，可以选择跳过CSS渲染-->
+			<p v-if="show">velo demo</p>
+		</transition>
+	</div>
+
 	<script>
 		var exp1 = new Vue({
 			el: "#exp1",
@@ -31,5 +49,40 @@
 				show: true
 			}
 		})
+		var exp2 = new Vue({
+			el: "#exp2",
+			data:{
+				show: true
+			}
+		})
+		var exp3 = new Vue({
+			el: "#exp3",
+			data: {
+			    show: true
+			  },
+			  methods: {
+			    beforeEnter: function (el) {
+			      el.style.opacity = 0
+			      el.style.transformOrigin = 'left'
+			    },
+			    //enter和leave的函数里要有done，这是必须的
+			    enter: function (el, done) {
+			      Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })
+			      Velocity(el, { fontSize: '1em' }, { complete: done })
+			    },
+			    leave: function (el, done) {
+			      Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+			      Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+			      Velocity(el, {
+			        rotateZ: '45deg',
+			        translateY: '30px',
+			        translateX: '30px',
+			        opacity: 0
+			      }, { complete: done })
+			    }
+			  }
+		})
+		//可复用的过渡
+		
 	</script>
 </body>
